@@ -13,6 +13,7 @@ namespace CoisadiMae.Styles
 
         public static string IconsFontFamily = "grialshapes";
         public static string IconsFontAwesome = "FontAwesome";
+        public static string IconsFontIonic = "Ionicons";
 
         public static Color OverImageTextColor = Color.FromHex("#FFFFFF");
         public static Color AccentColor = Color.FromHex("#FFDA125F");
@@ -89,6 +90,11 @@ namespace CoisadiMae.Styles
                 {
                     Property = Label.TextProperty,
                     Value = Util.Fonts.FontAwesomeFont.Camera
+                },
+                new Setter
+                {
+                    Property = Label.FontFamilyProperty,
+                    Value = IconsFontIonic
                 }
             }
         };
@@ -107,7 +113,12 @@ namespace CoisadiMae.Styles
                 {
                     Property = Label.TextColorProperty,
                     Value =AccentColor
-                }
+				},
+				new Setter
+				{
+					Property = Label.FontFamilyProperty,
+					Value = IconsFontIonic
+				}
             }
         };
 
@@ -575,7 +586,7 @@ namespace CoisadiMae.Styles
                 new Setter
                 {
                     Property = Label.FontFamilyProperty,
-                    Value = IconsFontFamily
+                    Value = IconsFontIonic
                 }
             }
         };
