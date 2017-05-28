@@ -10,6 +10,8 @@ namespace CoisadiMae.Models
         public int ConversationId { get; set; }
         public string Text { get; set; }
         public EnumOwner Owner { get; set; }
-        public DateTimeOffset Date { get; set; }
+        public DateTime Date { get; set; }
+
+        public string FormattedDate => Date.ToString("d");
     }
 }

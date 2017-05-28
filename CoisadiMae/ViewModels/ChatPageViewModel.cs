@@ -55,7 +55,7 @@ namespace CoisadiMae.ViewModels
                     Bot = new Bot { Name = "Ana Maria", Id = 1 },
                     Messages = new List<Message>()
                 };
-                AtualConversation.Messages.Add(new Message { Text = text, Date = DateTimeOffset.Now, Owner = Models.Enums.EnumOwner.Bot });
+                AtualConversation.Messages.Add(new Message { Text = text, Date = DateTime.Now, Owner = Models.Enums.EnumOwner.Bot });
                 await _conversationService.AddAsync(AtualConversation);
                 AtualConversation = (await _conversationService.GetAllAsync()).Last();
 
@@ -92,8 +92,8 @@ namespace CoisadiMae.ViewModels
                         {
                             AtualConversation.Messages = new List<Message>
                             {
-                                new Message() { Text = MessageText, Date = DateTimeOffset.Now, Owner = Models.Enums.EnumOwner.Mom },
-                                new Message() { Text = string.Concat(" ", ret), Date = DateTimeOffset.Now, Owner = Models.Enums.EnumOwner.Bot }
+                                new Message() { Text = MessageText, Date = DateTime.Now, Owner = Models.Enums.EnumOwner.Mom },
+                                new Message() { Text = string.Concat(" ", ret), Date = DateTime.Now, Owner = Models.Enums.EnumOwner.Bot }
                             };
 
                             await _conversationService.AddAsync(AtualConversation);

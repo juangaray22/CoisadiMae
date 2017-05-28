@@ -14,7 +14,7 @@ namespace CoisadiMae.Views
 {
 
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ChatLeftMessageItemTemplate : ContentView
+    public partial class ChatLeftMessageItemTemplate : ViewCell
     {
         public ChatLeftMessageItemTemplate()
         {

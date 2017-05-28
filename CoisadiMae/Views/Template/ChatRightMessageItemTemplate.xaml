@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<ContentView
+<ViewCell
     x:Class="CoisadiMae.Views.ChatRightMessageItemTemplate"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:Styles="clr-namespace:CoisadiMae.Styles;assembly=CoisadiMae"
     xmlns:font="clr-namespace:CoisadiMae.Util.Fonts;assembly=CoisadiMae">
     <!--  xmlns:icon="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize">  -->
-    <ContentView.Content>
         <Grid
             Padding="0,0,0,20"
             ColumnSpacing="0"
@@ -69,7 +68,7 @@
                 Grid.Column="0"
                 FontSize="12"
                 HorizontalOptions="Start"
-                Text="{Binding Date, StringFormat='{0:dd/MM}'}"
+                Text="{Binding FormattedDate}"
                 TextColor="{x:Static Styles:Theme.BaseTextColor}"
                 TranslationX="10"
                 TranslationY="10"
@@ -87,5 +86,4 @@
                 TranslationY="10"
                 VerticalTextAlignment="Center" />
         </Grid>
-    </ContentView.Content>
-</ContentView>
+</ViewCell>
