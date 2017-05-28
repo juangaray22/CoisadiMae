@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="CoisadiMae.Views.RecentChatItemTemplate"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Styles="clr-namespace:CoisadiMae.Styles;assembly=CoisadiMae"
+    xmlns:artina="clr-namespace:UXDivers.Artina.Shared;assembly=UXDivers.Artina.Shared"
+    xmlns:font="clr-namespace:CoisadiMae.Util.Fonts;assembly=CoisadiMae"
+    xmlns:local="clr-namespace:CoisadiMae;assembly=CoisadiMae">
+    <ContentView.Content>
+        <!--  MAIN WRAPPER  -->
+        <StackLayout
+            Padding="0"
+            BackgroundColor="{x:Static Styles:Theme.BasePageColor}"
+            HorizontalOptions="Fill"
+            Spacing="0">
+
+            <!--  MAIN GRID  -->
+            <Grid
+                Padding="20,0"
+                ColumnSpacing="10"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{artina:OnOrientationDouble Default=45, PortraitTablet=55, LandscapeTablet=55}" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="60" />
+                </Grid.ColumnDefinitions>
+
+                <!--
+                    CONTACT IMAGE
+                    BorderColor="{ StaticResource OkColor }"
+                    BorderThickness="3"
+                -->
+                <!--<artina:CircleImage
+                    Grid.Column="0"
+                    Aspect="AspectFill"
+                    BorderColor="{x:Static Styles:Theme.AccentColor}"
+                    BorderThickness="2"
+                    HeightRequest="{artina:OnOrientationDouble Default=45,
+                                                               PortraitTablet=55,
+                                                               LandscapeTablet=55}"
+                    Source="{Binding From.Avatar}"
+                    VerticalOptions="Center"
+                    WidthRequest="{artina:OnOrientationDouble Default=45,
+                                                              PortraitTablet=55,
+                                                              LandscapeTablet=55}" />-->
+
+                <!--  NOTIFICATION  -->
+                <StackLayout
+                    Grid.Column="1"
+                    HorizontalOptions="Start"
+                    Orientation="Vertical"
+                    Spacing="{artina:OnOrientationDouble Default=0,
+                                                         PortraitTablet=2,
+                                                         LandscapeTablet=2}"
+                    VerticalOptions="Center">
+
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        HorizontalOptions="FillAndExpand"
+                        Text="{Binding From.Name}"
+                        VerticalOptions="Center" />
+
+                    <StackLayout Orientation="Horizontal" Spacing="6">
+
+                        <Label
+                            FontSize="16"
+                            HorizontalTextAlignment="End"
+                            IsVisible="{Binding IsRead}"
+                            Style="{x:Static Styles:Theme.FontIcon}"
+                            Text="{x:Static font:FontAwesomeFont.Check}"
+                            TextColor="{x:Static Styles:Theme.OkColor}"
+                            VerticalOptions="Center" />
+
+                        <Label
+                            FontAttributes="Italic"
+                            FontSize="14"
+                            HorizontalOptions="FillAndExpand"
+                            LineBreakMode="TailTruncation"
+                            Text="{Binding Body}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                </StackLayout>
+
+                <!--  TIME DELIVER  -->
+                <StackLayout
+                    Grid.Column="2"
+                    Orientation="Horizontal"
+                    VerticalOptions="Center">
+
+                    <Label FontSize="14" Text="{Binding When}" />
+
+                    <Label
+                        FontSize="14"
+                        HorizontalTextAlignment="End"
+                        Style="{x:Static Styles:Theme.FontIcon}"
+                        Text="{x:Static font:FontAwesomeFont.Check}"
+                        TextColor="{x:Static Styles:Theme.OkColor}"
+                        VerticalTextAlignment="Center" />
+
+                </StackLayout>
+
+            </Grid>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentView
+    x:Class="CoisadiMae.Views.ChatRightMessageItemTemplate"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Styles="clr-namespace:CoisadiMae.Styles;assembly=CoisadiMae"
+    xmlns:font="clr-namespace:CoisadiMae.Util.Fonts;assembly=CoisadiMae">
+<!--    xmlns:icon="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize">-->
+    <ContentView.Content>
+        <Grid
+            Padding="0,0,0,20"
+            ColumnSpacing="0"
+            RowSpacing="0"
+            VerticalOptions="StartAndExpand">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!--  LEFT TRIANGLE  -->
+            <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                FontSize="26"
+                HorizontalTextAlignment="Start"
+                Style="{x:Static Styles:Theme.FontIcon}"
+                Text="{x:Static font:FontAwesomeFont.BoldArrowDown}"
+                TextColor="{x:Static Styles:Theme.ChatRightBalloonBackgroundColor}"
+                TranslationX="-26"
+                TranslationY="-11"
+                VerticalTextAlignment="Start" />
+
+
+            <!--  BALLOON BACKGROUND  -->
+            <StackLayout
+                Grid.Row="0"
+                Grid.Column="0"
+                Padding="10"
+                BackgroundColor="{x:Static Styles:Theme.ChatRightBalloonBackgroundColor}"
+                VerticalOptions="EndAndExpand">
+
+                <Label
+                    FontSize="12"
+                    Text="{Binding Body}"
+                    TextColor="{x:Static Styles:Theme.ChatRightTextColor}" />
+            </StackLayout>
+
+
+            <!--  RIGHT AVATAR  -->
+
+            <!--<artina:CircleImage
+                Grid.Row="1"
+                Grid.Column="1"
+                BorderColor="{x:Static Styles:Theme.ChatRightBalloonBackgroundColor}"
+                HorizontalOptions="Start"
+                Source="{Binding From.Avatar}"
+                TranslationY="10" />-->
+
+            <!--  WHEN  -->
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                FontSize="12"
+                HorizontalOptions="Start"
+                Text="{Binding When}"
+                TextColor="{x:Static Styles:Theme.BaseTextColor}"
+                TranslationX="10"
+                TranslationY="10"
+                VerticalOptions="CenterAndExpand" />
+
+            <!--  BY  -->
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                FontSize="12"
+                HorizontalTextAlignment="End"
+                Text="{Binding From.FirstName}"
+                TextColor="{x:Static Styles:Theme.BaseTextColor}"
+                TranslationX="-10"
+                TranslationY="10"
+                VerticalTextAlignment="Center" />
+        </Grid>
+    </ContentView.Content>
+</ContentView>

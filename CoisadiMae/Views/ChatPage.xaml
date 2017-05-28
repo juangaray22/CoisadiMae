@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CoisadiMae.Views.ChatPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Styles="clr-namespace:CoisadiMae.Styles;assembly=CoisadiMae"
+    xmlns:selector="clr-namespace:CoisadiMae.DataTemplateSelector;assembly=CoisadiMae"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    prism:ViewModelLocator.AutowireViewModel="True">
+
+    <ContentPage.Resources>
+    <ResourceDictionary>
+      <selector:ChatMessageTemplateSelector x:Key="MessageTemplateSelector" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <ListView
+            Grid.Column="0"
+            HasUnevenRows="false"
+            ItemTemplate="{StaticResource MessageTemplateSelector}" 
+            ItemsSource="{Binding Conversation.Messages}"
+            SeparatorColor="Transparent"
+            SeparatorVisibility="None">
+            <ListView.RowHeight>
+                <OnIdiom
+                    x:TypeArguments="x:Int32"
+                    Phone="80"
+                    Tablet="120" />
+            </ListView.RowHeight>
+        </ListView>
+
+        <Grid Grid.Column="0" RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="52" />
+            </Grid.RowDefinitions>
+
+            <ScrollView Grid.Row="0">
+                <StackLayout x:Name="ChatMessagesListView" Padding="20" />
+            </ScrollView>
+
+            <!-- BUTTONS CONTAINER  -->
+            <Grid
+                Grid.Row="1"
+                Padding="10"
+                BackgroundColor="#cfd8dc"
+                ColumnSpacing="10"
+                MinimumHeightRequest="40">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="50*" />
+                    <ColumnDefinition Width="40" />
+                </Grid.ColumnDefinitions>
+                <!--  - PICTURE BUTTON  -->
+                <Label
+                    Grid.Column="0"
+                    Style="{x:Static Styles:Theme.ChatIconButtonPictureStyle}"
+                    TextColor="Black" />
+
+                <!--  ENTRY  -->
+                <Entry
+                    Grid.Column="1"
+                    Placeholder="Type your message..."
+                    Style="{x:Static Styles:Theme.ChatMessageEntryStyle}" />
+				
+                <!--  - SEND BUTTON  -->
+                <Label
+                    Grid.Column="2"
+                    Style="{x:Static Styles:Theme.ChatIconButtonSendStyle}"
+                    TextColor="{x:Static Styles:Theme.AccentColor}" />
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>
