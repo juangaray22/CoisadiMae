@@ -6,7 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:Styles="clr-namespace:CoisadiMae.Styles;assembly=CoisadiMae"
     xmlns:font="clr-namespace:CoisadiMae.Util.Fonts;assembly=CoisadiMae">
-<!--    xmlns:icon="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize">-->
+    <!--  xmlns:icon="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize">  -->
     <ContentView.Content>
         <Grid
             Padding="0,0,0,20"
@@ -48,7 +48,7 @@
 
                 <Label
                     FontSize="12"
-                    Text="{Binding Body}"
+                    Text="{Binding Text}"
                     TextColor="{x:Static Styles:Theme.ChatRightTextColor}" />
             </StackLayout>
 
@@ -69,7 +69,7 @@
                 Grid.Column="0"
                 FontSize="12"
                 HorizontalOptions="Start"
-                Text="{Binding When}"
+                Text="{Binding Date, StringFormat='{0:dd/MM}'}"
                 TextColor="{x:Static Styles:Theme.BaseTextColor}"
                 TranslationX="10"
                 TranslationY="10"
@@ -81,7 +81,7 @@
                 Grid.Column="0"
                 FontSize="12"
                 HorizontalTextAlignment="End"
-                Text="{Binding From.FirstName}"
+                Text="usuario"
                 TextColor="{x:Static Styles:Theme.BaseTextColor}"
                 TranslationX="-10"
                 TranslationY="10"
