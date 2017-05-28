@@ -1,58 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using SQLiteNetExtensions.Extensions;
+using CoisadiMae.Infrastructure.Configurations;
 using CoisadiMae.Models;
-using Xamarin.Forms;
 
-
-namespace CoisadiMae.Infrastructure.Repositories
+namespace CoisadiMaeRepository
 {
     /// <summary>
     /// Base repository.
     /// </summary>
     public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity, new()
     {
+        LiteDatabase db;
 
-        readonly object _lock = new object();
-        // readonly ICryptoFunctions _cryptoFunctions;
-        readonly ILiteDBOperations _litedb;
-        
 
         public BaseRepository()
         {
-            //if (_litedb == null)
-            //{
-            //    _litedb = DBContext.Instance;
-            //    CreateTables();
-            //}
-            _litedb = DependencyService.Get<ILiteDBOperations>();
+            if (App.AppConn == null)
+            {
+                App.AppConn = DBContext.Instance;
+                CreateTables();
+            }
         }
 
-        //private void CreateTables()
-        //{
-        //    try
-        //    {
-        //        _litedb.CreateTable<Bot>();
-        //        _litedb.CreateTable<Context>();
-        //        _litedb.CreateTable<Simulation>();
-        //        _litedb.CreateTable<Mom>();
+        private void CreateTables()
+        {
+            try
+            {
+                App.AppConn.CreateTable<Bot>();
+                App.AppConn.CreateTable<Context>();
+                App.AppConn.CreateTable<Simulation>();
+                App.AppConn.CreateTable<Mom>();
                 
                 
-        //        _litedb.CreateTable<Son>();
+                App.AppConn.CreateTable<Son>();
                                 
-        //        _litedb.CreateTable<Conversation>();
-        //        _litedb.CreateTable<Message>();
+                App.AppConn.CreateTable<Conversation>();
+                App.AppConn.CreateTable<Message>();
 
                 
 
-        //    }
-        //    catch (Exception ex)
-        //    {
+            }
+            catch (Exception ex)
+            {
 
-        //        throw;
-        //    }
+                throw;
+            }
       
-        //}
+        }
 
         /// <summary>
         /// Add the specified TEntity.
@@ -63,7 +59,7 @@ namespace CoisadiMae.Infrastructure.Repositories
         {
             try
             {
-                _litedb.Insert(TEntity);
+                App.AppConn.InsertOrReplaceWithChildren(TEntity);
             }
             catch (Exception ex)
             {
@@ -80,7 +76,7 @@ namespace CoisadiMae.Infrastructure.Repositories
         {
             try
             {
-                _litedb.Delete(TEntity);
+                App.AppConn.Delete(TEntity);
             }
             catch (Exception ex)
             {
@@ -97,7 +93,7 @@ namespace CoisadiMae.Infrastructure.Repositories
         {
             try
             {
-                return _litedb.GetById<T>(pkId);
+                return App.AppConn.GetWithChildren<T>(pkId, recursive: true);
             }
             catch (Exception ex)
             {
@@ -113,7 +109,7 @@ namespace CoisadiMae.Infrastructure.Repositories
         {
             try
             {
-                return _litedb.GetAll<T>();
+                return App.AppConn.GetAllWithChildren<T>();
             }
             catch (Exception ex)
             {
@@ -130,7 +126,7 @@ namespace CoisadiMae.Infrastructure.Repositories
         {
             try
             {
-                return _litedb.GetAllWithPredicate(predicate);
+                return App.AppConn.GetAllWithChildren(predicate);
             }
             catch (Exception ex)
             {
@@ -147,7 +143,7 @@ namespace CoisadiMae.Infrastructure.Repositories
         {
             try
             {
-                return _litedb.Get<T>(predicate);
+                return App.AppConn.GetWithChildren<T>(predicate);
             }
             catch (Exception ex)
             {
@@ -164,7 +160,7 @@ namespace CoisadiMae.Infrastructure.Repositories
         {
             try
             {
-                _litedb.Update(TEntity);
+                App.AppConn.UpdateWithChildren(TEntity);
             }
             catch (Exception ex)
             {

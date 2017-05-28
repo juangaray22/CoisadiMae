@@ -99,7 +99,7 @@ namespace CoisadiMae.ApplicationServices
             throw new NotImplementedException();
         }
 
-        public async Task<string> DoConversation(string phrase)
+        public async Task<ConversationResponse> DoConversation(string phrase)
         {
             //if (!await _connectivity.IsConnected())
             //throw new NoConnectionException();
@@ -108,10 +108,10 @@ namespace CoisadiMae.ApplicationServices
             if (data != null)
                 return data;
 
-            return string.Empty;
+            return null;
         }
 
-        public async Task<string> FetchDataFromServer(string phrase)
+        public async Task<ConversationResponse> FetchDataFromServer(string phrase)
         {
             try
             {
@@ -123,12 +123,12 @@ namespace CoisadiMae.ApplicationServices
                     var dataAsString = await data.Content.ReadAsStringAsync();
                     if (!string.IsNullOrEmpty(dataAsString))
                     {
-                        var obj = JsonConvert.DeserializeObject<string>(dataAsString);
+                        var obj = JsonConvert.DeserializeObject<ConversationResponse>(dataAsString);
                         return obj;
                     }
                 }
 
-                return string.Empty;
+                return null;
             }
             catch (Exception ex)
             {

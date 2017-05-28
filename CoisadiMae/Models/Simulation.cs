@@ -4,8 +4,6 @@ namespace CoisadiMae.Models
 {
     public class Simulation : BaseEntity
     {
-        [ForeignKey(typeof(Mom))]
-        public Mom Mom { get; set; }
         public int MomId { get; set; }
 
         public bool SocialSecurity { get; set; }

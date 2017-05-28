@@ -5,7 +5,7 @@ namespace CoisadiMae.ApplicationServices
 {
     public interface IChatApplicationService : IApplicationService<Conversation>
     {
-        Task<string> DoConversation(string phrase);
-        Task<string> FetchDataFromServer(string phrase);
+        Task<ConversationResponse> DoConversation(string phrase);
+        Task<ConversationResponse> FetchDataFromServer(string phrase);
     }
 }

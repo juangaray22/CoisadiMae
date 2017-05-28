@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using SQLiteNetExtensions.Attributes;
 using System.Collections.Generic;
 
 namespace CoisadiMae.Models
@@ -13,6 +14,10 @@ namespace CoisadiMae.Models
         [Ignore]
         public string FormattedName => $"{FirstName} {LastName}";
 
-        List<Simulation> Simulations { get; set; }
+        public List<Simulation> Simulations { get; set; }
+
+        public List<Son> Sons { get; set; }
+
+
     }
 }

@@ -1,7 +1,7 @@
 ﻿using CoisadiMae.Models;
 using Prism.Commands;
 using Prism.Mvvm;
-//using PropertyChanged;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using CoisadiMae.Util.UIFunctions;
 
 namespace CoisadiMae.ViewModels
 {
-    //[ImplementPropertyChanged]
+    [ImplementPropertyChanged]
     public class ChatPageViewModel : BindableBase
     {
         readonly IChatApplicationService _chatService;
@@ -19,7 +19,7 @@ namespace CoisadiMae.ViewModels
         readonly IDialogsFunction _dialogFunction;
 
         public string MessageText { get; set; }
-        public Conversation Conversation { get; set; }
+        public Conversation AtualConversation { get; set; }
         public DelegateCommand SendMessageCmd { get; set; }
 
         public ChatPageViewModel(IChatApplicationService chatService,
@@ -36,35 +36,43 @@ namespace CoisadiMae.ViewModels
 
         async Task Welcome()
         {
-            if (Conversation != null)
+            if (AtualConversation != null)
                 return;
 
             var ret = await _chatService.DoConversation("Ola");
-            if (!string.IsNullOrEmpty(ret))
+            if (ret!=null)
                 await SetBotForConversation(ret);
         }
 
-        async Task SetBotForConversation(string message)
+        async Task SetBotForConversation(ConversationResponse message)
         {
-            Conversation = new Conversation()
+            try
             {
-                Bot = new Bot { Name = "Ana Maria", Id = 1 },
-                Messages = new List<Message>
+                var text = string.Join (" ", message.output.text);
+                
+                AtualConversation = new Conversation()
                 {
-                    new Message(){ Text=message, Date=DateTimeOffset.Now, Owner= Models.Enums.EnumOwner.Bot}
-                }
-            };
+                    Bot = new Bot { Name = "Ana Maria", Id = 1 },
+                    Messages = new List<Message>()
+                };
+                AtualConversation.Messages.Add(new Message { Text = text, Date = DateTimeOffset.Now, Owner = Models.Enums.EnumOwner.Bot });
+                await _conversationService.AddAsync(AtualConversation);
+                AtualConversation = (await _conversationService.GetAllAsync()).Last();
 
-            await _conversationService.AddAsync(Conversation);
-            Conversation = (await _conversationService.GetAllAsync()).Last();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         async Task SetMonForConversation(string momName, int momAge)
         {
-            Conversation.Mom = new Mom() { FirstName = momName, Age = momAge };
+            AtualConversation.Mom = new Mom() { FirstName = momName, Age = momAge };
 
-            await _conversationService.AddAsync(Conversation);
-            Conversation = await _conversationService.GetAsync(Conversation.Id);
+            await _conversationService.AddAsync(AtualConversation);
+            AtualConversation = await _conversationService.GetAsync(AtualConversation.Id);
         }
 
         Action SendMessage
@@ -73,23 +81,23 @@ namespace CoisadiMae.ViewModels
             {
                 return new Action(async () =>
                 {
-                    var ret = string.Empty;
+                    ConversationResponse ret = null;
 
                     if (!string.IsNullOrEmpty((MessageText)))
                         ret = await _chatService.DoConversation(MessageText);
 
-                    if (!string.IsNullOrEmpty(ret))
+                    if (ret!=null)
                     {
-                        if (Conversation.Messages == null || !Conversation.Messages.Any())
+                        if (AtualConversation.Messages == null || !AtualConversation.Messages.Any())
                         {
-                            Conversation.Messages = new List<Message>
+                            AtualConversation.Messages = new List<Message>
                             {
                                 new Message() { Text = MessageText, Date = DateTimeOffset.Now, Owner = Models.Enums.EnumOwner.Mom },
-                                new Message() { Text = ret, Date = DateTimeOffset.Now, Owner = Models.Enums.EnumOwner.Bot }
+                                new Message() { Text = string.Concat(" ", ret), Date = DateTimeOffset.Now, Owner = Models.Enums.EnumOwner.Bot }
                             };
 
-                            await _conversationService.AddAsync(Conversation);
-                            Conversation = (await _conversationService.GetAllAsync()).Last();
+                            await _conversationService.AddAsync(AtualConversation);
+                            AtualConversation = (await _conversationService.GetAllAsync()).Last();
                         }
 
                         MessageText = string.Empty;
